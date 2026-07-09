@@ -1,0 +1,294 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* The content UI lives inside a Shadow DOM, so these resets are scoped and
+   cannot leak into (or be overridden by) the host page. */
+:host {
+  all: initial;
+}
+
+.gw-root,
+.gw-root * {
+  box-sizing: border-box;
+}
+
+.gw-root {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  color: #0f1115;
+}
+
+/* Base text colour by theme — applies to plain text (translations, labels)
+   that don't have an explicit colour. Component-specific rules (.gw-btn etc.)
+   are more specific and still win. */
+.gw-dark {
+  color: #f4f6fb;
+}
+
+@layer components {
+  .gw-glass {
+    @apply backdrop-blur-2xl border;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.92) 0%,
+      rgba(248, 250, 252, 0.86) 100%
+    );
+    border-color: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 10px 34px rgba(17, 24, 39, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  }
+
+  .gw-dark .gw-glass {
+    background: linear-gradient(
+      135deg,
+      rgba(58, 62, 74, 0.96) 0%,
+      rgba(44, 48, 58, 0.94) 100%
+    );
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 10px 34px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(120, 170, 255, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  .gw-chip {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium transition-colors duration-150;
+    color: #1f2430;
+  }
+  .gw-dark .gw-chip {
+    color: #e8eaf0;
+  }
+
+  .gw-btn {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-1.5 text-[13px] font-medium transition-all duration-150 select-none cursor-pointer;
+    color: #0f1115;
+  }
+  .gw-btn:hover {
+    background: rgba(0, 0, 0, 0.06);
+  }
+  .gw-btn:active {
+    transform: scale(0.96);
+  }
+  .gw-dark .gw-btn {
+    color: #e8eaf0;
+  }
+  .gw-dark .gw-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .gw-btn-primary {
+    background: linear-gradient(135deg, #0a84ff 0%, #0066d6 100%);
+    color: #fff;
+  }
+  .gw-btn-primary:hover {
+    background: linear-gradient(135deg, #2b95ff 0%, #0a78f0 100%);
+  }
+
+  .gw-divider {
+    width: 1px;
+    align-self: stretch;
+    margin: 4px 2px;
+    background: rgba(0, 0, 0, 0.1);
+  }
+  .gw-dark .gw-divider {
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .gw-grip {
+    @apply flex items-center justify-center rounded-lg px-1 text-base leading-none select-none;
+    cursor: grab;
+    color: #9aa0ad;
+    touch-action: none;
+    align-self: stretch;
+  }
+  .gw-grip:hover {
+    background: rgba(0, 0, 0, 0.06);
+    color: #1f2430;
+  }
+  .gw-grip:active {
+    cursor: grabbing;
+  }
+  .gw-dark .gw-grip:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #e8eaf0;
+  }
+
+  .gw-kbd {
+    @apply rounded-md px-1.5 py-0.5 text-[10px] font-semibold;
+    background: rgba(0, 0, 0, 0.08);
+  }
+  .gw-dark .gw-kbd {
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .gw-menu {
+    @apply rounded-2xl p-1.5 gw-glass;
+    min-width: 184px;
+    max-width: min(280px, 90vw);
+  }
+  .gw-menu-item {
+    @apply flex items-center justify-between gap-3 rounded-xl px-3 py-2 text-[13px] cursor-pointer transition-colors duration-100;
+    color: #1f2430;
+    white-space: nowrap;
+  }
+  .gw-menu-item > span:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .gw-menu-item:hover {
+    background: rgba(10, 132, 255, 0.12);
+  }
+  .gw-dark .gw-menu-item {
+    color: #e8eaf0;
+  }
+  .gw-dark .gw-menu-item:hover {
+    background: rgba(10, 132, 255, 0.22);
+  }
+
+  /* Sticky search header inside language menus */
+  .gw-menu-search {
+    position: sticky;
+    top: -6px;
+    z-index: 2;
+    margin: -6px -6px 4px;
+    padding: 8px;
+    background: rgba(245, 246, 249, 0.95);
+    backdrop-filter: blur(12px);
+    border-radius: 14px 14px 8px 8px;
+  }
+  .gw-dark .gw-menu-search {
+    background: rgba(28, 30, 38, 0.95);
+  }
+  .gw-search-input {
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.04);
+    border-radius: 10px;
+    padding: 6px 10px;
+    font-size: 13px;
+    line-height: 1.2;
+    color: #1f2430;
+    outline: none;
+    transition: border-color 0.12s ease;
+  }
+  .gw-search-input:focus {
+    border-color: rgba(10, 132, 255, 0.6);
+  }
+  .gw-search-input::placeholder {
+    color: rgba(120, 125, 135, 0.8);
+  }
+  .gw-dark .gw-search-input {
+    border-color: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.06);
+    color: #e8eaf0;
+  }
+  .gw-menu-empty {
+    @apply px-3 py-3 text-[13px] text-center;
+    color: rgba(120, 125, 135, 0.9);
+  }
+
+  /* Slim, themed scrollbar for menus and scrollable popups */
+  .gw-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(120, 120, 130, 0.45) transparent;
+  }
+  .gw-scroll::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .gw-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .gw-scroll::-webkit-scrollbar-thumb {
+    background: rgba(120, 120, 130, 0.4);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  .gw-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(120, 120, 130, 0.65);
+    background-clip: content-box;
+  }
+  .gw-dark .gw-scroll {
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  }
+  .gw-dark .gw-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.28);
+    background-clip: content-box;
+  }
+  /* AI Reply composer */
+  .gw-reply-input {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 12px;
+    padding: 9px 12px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: #1f2430;
+    outline: none;
+    transition: border-color 0.12s ease;
+    font-family: inherit;
+  }
+  .gw-reply-input:focus {
+    border-color: rgba(10, 132, 255, 0.6);
+  }
+  .gw-reply-input::placeholder {
+    color: rgba(120, 125, 135, 0.8);
+  }
+  .gw-dark .gw-reply-input {
+    border-color: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.05);
+    color: #e8eaf0;
+  }
+  .gw-reply-body {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 12px;
+    padding: 10px 12px;
+    min-height: 150px;
+    max-height: 38vh;
+    overflow-y: auto;
+    color: #15171c;
+  }
+  .gw-dark .gw-reply-body {
+    border-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    color: #eef0f5;
+  }
+  .gw-btn:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.gw-shimmer-text {
+  background: linear-gradient(90deg, currentColor 25%, rgba(120, 120, 120, 0.35) 50%, currentColor 75%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gw-shimmer 1.5s linear infinite;
+}
+
+/* Hover-to-translate ghost button shown on the bottom-right of message blocks */
+.gw-ghost-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 9999px;
+  color: #fff;
+  background: linear-gradient(135deg, #0a84ff 0%, #0066d6 100%);
+  box-shadow: 0 4px 12px rgba(10, 132, 255, 0.4);
+  cursor: pointer;
+  opacity: 0.92;
+  transition: transform 0.12s ease, opacity 0.12s ease, box-shadow 0.12s ease;
+  z-index: 2147483647;
+}
+.gw-ghost-btn:hover {
+  opacity: 1;
+  transform: scale(1.08);
+  box-shadow: 0 6px 16px rgba(10, 132, 255, 0.5);
+}
+.gw-ghost-btn:active {
+  transform: scale(0.95);
+}

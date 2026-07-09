@@ -1,0 +1,29 @@
+# ---- Dependencies & build output ----
+node_modules
+dist
+.vite
+.DS_Store
+*.log
+
+# Generated icons (produced by `npm run gen:icons`)
+public/icons/*.png
+
+# Packaged extension
+*.zip
+
+# ---- Private backend / infra (NOT part of the open-source extension) ----
+worker/
+web/
+
+# ---- Secrets & env (never commit) ----
+.env
+.env.*
+!.env.example
+*.dev.vars
+.dev.vars
+**/wrangler.jsonc
+**/wrangler.toml
+
+# Editor
+.vscode/
+.idea/
